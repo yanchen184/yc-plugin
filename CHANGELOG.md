@@ -2,6 +2,22 @@
 
 All notable changes documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.4.0] — 2026-05-08
+
+### Added
+- **`setup.py --export PATH`** — bundle `client_secret.json` + `yt_token.json` into a zip for cross-machine transfer or sharing with collaborators
+- **`setup.py --import PATH`** — restore credentials from an export zip; new machine can upload immediately without browser auth
+- README section: 「換電腦 / 分享給夥伴」with prominent security warning about token sharing risks
+
+### Use cases unlocked
+- Switching machines without re-running OAuth browser flow
+- Letting an editor / VA upload videos to your channel on your behalf
+- Backing up credentials to a secure vault (1Password etc.)
+
+### Security
+- Export prints loud multi-line warning about credential sensitivity and revocation URL
+- Import validates JSON structure before installing
+
 ## [0.3.0] — 2026-05-07
 
 ### Added

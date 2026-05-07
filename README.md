@@ -157,9 +157,43 @@ Plugin 會自動：
 - ✅ **沒有第三方 server** — 直接打 Google API
 - ⚠️ **如果 credential 不小心外洩**：去 [credentials 頁面](https://console.cloud.google.com/apis/credentials) 刪掉重建即可
 
-## 換電腦怎麼搬
+## 換電腦 / 分享給夥伴
+
+### 自己換電腦
 
 整個 `~/.claude/plugins/data/yc-plugin/` 搬過去就好（裡面有 `client_secret.json` + `yt_token.json`）。新機器裝完 plugin 之後直接可用。
+
+或者用內建的 export/import：
+
+```bash
+# 舊電腦
+python ~/.claude/plugins/cache/yc-plugin/.../bin/setup.py --export ~/Desktop/creds.zip
+
+# 新電腦（裝完 plugin 後）
+python ~/.claude/plugins/cache/yc-plugin/.../bin/setup.py --import ~/Downloads/creds.zip
+```
+
+### 讓夥伴幫你上傳
+
+例如你給剪輯師處理影片，最後要上你的頻道：
+
+```bash
+# 你
+python .../bin/setup.py --export creds.zip
+# 用安全管道（Signal / 1Password 共享）把 zip 給夥伴
+
+# 夥伴
+python .../bin/setup.py --import creds.zip
+# 接下來他跑 /youtube-upload，影片會上你的頻道，不需要瀏覽器登入
+```
+
+⚠️ **重要安全警告**：
+
+- `creds.zip` 內含你 YouTube 頻道的「**完整鑰匙**」
+- 持有這個 zip 的人可以**上傳、刪除、修改**你頻道任何影片
+- 90 天內 refresh_token 都有效
+- **不要**用 email、Slack、Discord、雲端硬碟分享 — 用 end-to-end 加密（Signal / iMessage / 1Password Secure Sharing）
+- 信任崩盤就去 https://myaccount.google.com/permissions 撤銷該 OAuth client，所有人手上的 token 立即失效
 
 ## FAQ
 

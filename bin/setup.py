@@ -8,10 +8,13 @@ Usage:
   python setup.py --client-secret PATH         # non-interactive
   python setup.py --show                       # report current state
   python setup.py --reset                      # delete client_secret + token
+  python setup.py --export PATH                # bundle creds into zip
+  python setup.py --import PATH                # restore creds from zip
 """
 import argparse
 import json
 import shutil
+import zipfile
 from pathlib import Path
 
 from lib import console
@@ -83,6 +86,82 @@ def reset() -> None:
         print("nothing to remove (already clean)")
 
 
+def export_credentials(out_path: Path) -> None:
+    """Bundle client_secret.json + yt_token.json into a zip for transferring to another machine.
+
+    The zip contains the live credentials of YOUR YouTube channel — anyone
+    holding it can upload / delete / modify videos on your channel until you
+    revoke the OAuth client at https://myaccount.google.com/permissions
+    """
+    cs = client_secret_file()
+    tok = token_file()
+    if not cs.exists():
+        console.err(
+            f"no client_secret.json to export (missing at {cs})",
+            "run setup first to install your OAuth client",
+        )
+    if not tok.exists():
+        console.err(
+            f"no yt_token.json to export (missing at {tok})",
+            "run /youtube-upload once and authorize in browser to generate the token, then re-export",
+        )
+
+    out_path = out_path.expanduser().resolve()
+    if out_path.is_dir():
+        out_path = out_path / "yc-plugin-credentials.zip"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with zipfile.ZipFile(out_path, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        z.write(cs, arcname="client_secret.json")
+        z.write(tok, arcname="yt_token.json")
+
+    console.warn("=" * 60)
+    console.warn("⚠  SECURITY: this zip contains LIVE credentials for your YouTube channel.")
+    console.warn("⚠  Anyone holding it can upload/delete/modify videos under your account.")
+    console.warn("⚠  Send via end-to-end encrypted channel only (Signal, 1Password share).")
+    console.warn("⚠  Never email or upload to public storage.")
+    console.warn("⚠  To revoke: https://myaccount.google.com/permissions")
+    console.warn("=" * 60)
+    console.ok(f"credentials exported: {out_path}")
+
+
+def import_credentials(zip_path: Path) -> None:
+    """Restore credentials from an export zip into plugin data dir."""
+    zip_path = zip_path.expanduser().resolve()
+    if not zip_path.exists():
+        console.err(f"zip not found: {zip_path}", "check the path")
+
+    data_dir = plugin_data_dir()
+
+    with zipfile.ZipFile(zip_path, "r") as z:
+        names = set(z.namelist())
+        required = {"client_secret.json", "yt_token.json"}
+        missing = required - names
+        if missing:
+            console.err(
+                f"zip is incomplete, missing: {', '.join(sorted(missing))}",
+                "ask the sender to re-run `setup.py --export`",
+            )
+        for name in required:
+            target = data_dir / name
+            if target.exists():
+                target.unlink()
+            with z.open(name) as src, target.open("wb") as dst:
+                shutil.copyfileobj(src, dst)
+
+    cs = client_secret_file()
+    ok, msg = validate_client_secret(cs)
+    if not ok:
+        console.err(
+            f"imported client_secret.json failed validation: {msg}",
+            "the zip may be corrupted; ask the sender to re-export",
+        )
+
+    console.ok(f"credentials imported into: {data_dir}")
+    console.info("you can now run /youtube-upload immediately — no browser auth needed.")
+    console.info("(uploads will appear under the original account's YouTube channel)")
+
+
 def interactive() -> Path:
     print(SETUP_INSTRUCTIONS)
     while True:
@@ -101,11 +180,26 @@ def interactive() -> Path:
 
 
 def main():
-    p = argparse.ArgumentParser()
+    p = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  setup.py                                        Interactive first-time setup
+  setup.py --client-secret ~/Downloads/cs.json   Non-interactive setup
+  setup.py --show                                 Print current state
+  setup.py --reset                                Wipe credentials
+  setup.py --export ~/share/creds.zip             Bundle creds for transfer
+  setup.py --import ~/Downloads/creds.zip         Restore from a transfer zip
+""",
+    )
     p.add_argument("--client-secret", help="Absolute path to OAuth client_secret JSON")
     p.add_argument("--show", action="store_true", help="Show current setup state")
     p.add_argument("--reset", action="store_true",
                    help="Delete client_secret.json and yt_token.json (requires re-setup)")
+    p.add_argument("--export", dest="export_path",
+                   help="Export client_secret + token to a zip for transferring to another machine")
+    p.add_argument("--import", dest="import_path",
+                   help="Import client_secret + token from a transfer zip")
     args = p.parse_args()
 
     console.init()
@@ -116,6 +210,14 @@ def main():
 
     if args.reset:
         reset()
+        return
+
+    if args.export_path:
+        export_credentials(Path(args.export_path))
+        return
+
+    if args.import_path:
+        import_credentials(Path(args.import_path))
         return
 
     if args.client_secret:
