@@ -1,0 +1,13 @@
+# Never commit OAuth secrets — these belong in plugin data dir, not in git.
+.env
+.env.local
+client_secret*.json
+yt_token*.json
+*.token.json
+
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+.idea/
+.vscode/

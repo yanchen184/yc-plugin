@@ -1,0 +1,12 @@
+{
+  "name": "yc-plugin",
+  "metadata": {
+    "name": "Bob Chen"
+  },
+  "plugins": [
+    {
+      "name": "yc-plugin",
+      "source": "."
+    }
+  ]
+}

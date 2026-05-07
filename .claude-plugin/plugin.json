@@ -1,0 +1,9 @@
+{
+  "name": "yc-plugin",
+  "description": "Bob Chen's personal Claude Code toolkit — YouTube upload + content workflows",
+  "version": "0.1.0",
+  "author": {
+    "name": "Bob Chen",
+    "email": "bobchen184@gmail.com"
+  }
+}
