@@ -2,6 +2,20 @@
 
 All notable changes documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.4.1] — 2026-05-08
+
+### Added
+- **`/youtube-setup`** slash command — unified credential management:
+  - `/youtube-setup` (no args) → show state + list actions
+  - `/youtube-setup init` → OAuth setup walkthrough
+  - `/youtube-setup export <path>` → bundle creds for transfer
+  - `/youtube-setup import <path>` → restore from a transfer zip
+  - `/youtube-setup reset` → wipe credentials (with confirmation)
+
+### Changed
+- README now points users at slash command shorthand (e.g. `/youtube-setup export`) instead of the longer python invocation
+- README opening line lists both commands (`/youtube-upload` + `/youtube-setup`)
+
 ## [0.4.0] — 2026-05-08
 
 ### Added

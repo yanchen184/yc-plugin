@@ -1,7 +1,7 @@
 # yc-plugin
 
 > Claude Code 插件 — 把日常重複的內容工作自動化。
-> 第一個指令：**`/youtube-upload`**，從你終端機一行指令上傳到 YouTube。
+> 提供 **`/youtube-upload`** 一鍵上傳影片、**`/youtube-setup`** 管理 credentials。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Made for Claude Code](https://img.shields.io/badge/made%20for-Claude%20Code-orange)](https://claude.com/claude-code)
@@ -161,29 +161,27 @@ Plugin 會自動：
 
 ### 自己換電腦
 
-整個 `~/.claude/plugins/data/yc-plugin/` 搬過去就好（裡面有 `client_secret.json` + `yt_token.json`）。新機器裝完 plugin 之後直接可用。
+整個 `~/.claude/plugins/data/yc-plugin/` 搬過去就好。或用 `/youtube-setup`：
 
-或者用內建的 export/import：
-
-```bash
+```
 # 舊電腦
-python ~/.claude/plugins/cache/yc-plugin/.../bin/setup.py --export ~/Desktop/creds.zip
+/youtube-setup export ~/Desktop/creds.zip
 
 # 新電腦（裝完 plugin 後）
-python ~/.claude/plugins/cache/yc-plugin/.../bin/setup.py --import ~/Downloads/creds.zip
+/youtube-setup import ~/Downloads/creds.zip
 ```
 
 ### 讓夥伴幫你上傳
 
 例如你給剪輯師處理影片，最後要上你的頻道：
 
-```bash
+```
 # 你
-python .../bin/setup.py --export creds.zip
+/youtube-setup export ~/Desktop/wb_creds.zip
 # 用安全管道（Signal / 1Password 共享）把 zip 給夥伴
 
-# 夥伴
-python .../bin/setup.py --import creds.zip
+# 夥伴（裝完 plugin 後）
+/youtube-setup import ~/Downloads/wb_creds.zip
 # 接下來他跑 /youtube-upload，影片會上你的頻道，不需要瀏覽器登入
 ```
 

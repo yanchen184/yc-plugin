@@ -1,7 +1,7 @@
 {
   "name": "yc-plugin",
   "description": "Claude Code 插件 — /youtube-upload 一鍵上傳影片到 YouTube，支援封面、排程、播放清單、字幕，OAuth 自動處理",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": {
     "name": "Bob Chen",
     "email": "bobchen184@gmail.com"
