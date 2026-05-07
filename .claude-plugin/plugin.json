@@ -1,9 +1,17 @@
 {
   "name": "yc-plugin",
-  "description": "Bob Chen's personal Claude Code toolkit — YouTube upload + content workflows",
-  "version": "0.1.0",
+  "description": "個人 Claude Code 工具集 — 目前提供 /youtube-upload 一鍵上傳影片到 YouTube。OAuth 自動處理。",
+  "version": "0.2.0",
   "author": {
     "name": "Bob Chen",
     "email": "bobchen184@gmail.com"
-  }
+  },
+  "homepage": "https://github.com/yanchen184/yc-plugin",
+  "repository": "https://github.com/yanchen184/yc-plugin",
+  "license": "MIT",
+  "keywords": ["youtube", "upload", "oauth", "video", "creator", "automation"],
+  "category": "automation",
+  "tags": ["youtube", "creator-tools", "zh-tw"],
+  "hooks": "./hooks/hooks.json",
+  "commands": "./commands"
 }

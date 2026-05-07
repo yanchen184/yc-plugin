@@ -6,11 +6,16 @@ Usually you don't need this — the upload script auto-runs auth on first use.
 Usage:
   python youtube_auth.py
 """
+import io
 import os
 import sys
 from pathlib import Path
 
 from google_auth_oauthlib.flow import InstalledAppFlow
+
+if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 

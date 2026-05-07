@@ -1,12 +1,20 @@
 {
   "name": "yc-plugin",
   "metadata": {
-    "name": "Bob Chen"
+    "name": "Bob Chen",
+    "email": "bobchen184@gmail.com"
   },
   "plugins": [
     {
       "name": "yc-plugin",
-      "source": "."
+      "source": ".",
+      "description": "個人 Claude Code 工具集 — /youtube-upload 一鍵上傳影片到 YouTube",
+      "homepage": "https://github.com/yanchen184/yc-plugin",
+      "repository": "https://github.com/yanchen184/yc-plugin",
+      "license": "MIT",
+      "keywords": ["youtube", "upload", "oauth", "video", "creator", "automation", "zh-tw"],
+      "category": "automation",
+      "tags": ["youtube", "creator-tools"]
     }
   ]
 }
