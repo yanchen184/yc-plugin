@@ -8,11 +8,23 @@
     {
       "name": "yc-plugin",
       "source": ".",
-      "description": "個人 Claude Code 工具集 — /youtube-upload 一鍵上傳影片到 YouTube",
+      "description": "Claude Code 插件 — /youtube-upload 一鍵上傳影片到 YouTube，支援封面、排程、播放清單、字幕",
       "homepage": "https://github.com/yanchen184/yc-plugin",
       "repository": "https://github.com/yanchen184/yc-plugin",
       "license": "MIT",
-      "keywords": ["youtube", "upload", "oauth", "video", "creator", "automation", "zh-tw"],
+      "keywords": [
+        "youtube",
+        "upload",
+        "oauth",
+        "video",
+        "creator",
+        "automation",
+        "thumbnail",
+        "playlist",
+        "schedule",
+        "captions",
+        "zh-tw"
+      ],
       "category": "automation",
       "tags": ["youtube", "creator-tools"]
     }
