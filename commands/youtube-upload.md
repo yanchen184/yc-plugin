@@ -23,7 +23,7 @@ argument-hint: <video_path> [title]
 
 ### Step 2 — Check setup state
 
-跑 `python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --show` 確認 client_secret 已安裝。
+跑 `python3 "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --show` 確認 client_secret 已安裝。
 
 如果 `client_secret.json: (missing)`，跳到 Step 3。否則跳到 Step 4。
 
@@ -47,7 +47,7 @@ argument-hint: <video_path> [title]
 收到路徑後，跑：
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --client-secret "<USER_PROVIDED_PATH>"
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --client-secret "<USER_PROVIDED_PATH>"
 ```
 
 非零結束就把錯誤訊息給使用者並協助修正。
@@ -82,7 +82,7 @@ python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --client-secret "<USER_PROVIDED_PATH
 跑 dry-run 把要送的 metadata payload 印給使用者看：
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/youtube_upload.py" \
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/youtube_upload.py" \
   --file "<VIDEO>" --title "<T>" --description "<D>" \
   --tags "<TAGS>" --privacy "<P>" \
   [--thumbnail "<THUMB>"] [--playlist "<PL>"] \
@@ -97,7 +97,7 @@ python "${CLAUDE_PLUGIN_ROOT}/bin/youtube_upload.py" \
 ### Step 6 — Run the upload
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/youtube_upload.py" \
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/youtube_upload.py" \
   --file "<VIDEO>" \
   ... (所有 user 確認過的 flags)
 ```

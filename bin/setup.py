@@ -1,15 +1,16 @@
+#!/usr/bin/env python3
 """yc-plugin first-time setup.
 
 One job: copy the user's OAuth client_secret JSON into the plugin data dir.
 After this, /youtube-upload knows where to find it without any config.
 
 Usage:
-  python setup.py                              # interactive
-  python setup.py --client-secret PATH         # non-interactive
-  python setup.py --show                       # report current state
-  python setup.py --reset                      # delete client_secret + token
-  python setup.py --export PATH                # bundle creds into zip
-  python setup.py --import PATH                # restore creds from zip
+  python3 setup.py                              # interactive
+  python3 setup.py --client-secret PATH         # non-interactive
+  python3 setup.py --show                       # report current state
+  python3 setup.py --reset                      # delete client_secret + token
+  python3 setup.py --export PATH                # bundle creds into zip
+  python3 setup.py --import PATH                # restore creds from zip
 """
 import argparse
 import json

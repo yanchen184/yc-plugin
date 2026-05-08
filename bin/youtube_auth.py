@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Standalone OAuth bootstrap for yc-plugin.
 
 Forces a browser auth flow and saves token to plugin data dir.

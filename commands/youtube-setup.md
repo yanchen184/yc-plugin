@@ -31,7 +31,7 @@ argument-hint: [show|init|export|import|reset] [path]
 跑：
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --show
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --show
 ```
 
 把輸出貼給使用者，然後告訴他可用的 actions：
@@ -51,7 +51,7 @@ python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --show
 走 `/youtube-upload` 命令裡 Step 3 一樣的流程：解釋 Google Cloud Console 6 步驟，等使用者貼路徑，然後跑：
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --client-secret "<USER_PROVIDED_PATH>"
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --client-secret "<USER_PROVIDED_PATH>"
 ```
 
 如果失敗就把錯誤告訴使用者協助修正。成功就確認「[OK] 設定完成。可以跑 /youtube-upload 了。」
@@ -63,7 +63,7 @@ python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --client-secret "<USER_PROVIDED_PATH
 跑：
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --export "<PATH>"
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --export "<PATH>"
 ```
 
 腳本本身會印安全警告，**完整原樣**轉達給使用者，並補一句：
@@ -80,7 +80,7 @@ python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --export "<PATH>"
 跑：
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --import "<PATH>"
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --import "<PATH>"
 ```
 
 成功就告訴使用者：「[OK] 已還原。直接跑 /youtube-upload <video> 就會上到原帳號的頻道，不用瀏覽器登入。」
@@ -94,7 +94,7 @@ python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --import "<PATH>"
 得到 `yes` / `確定` / `y` 才跑：
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --reset
+python3 "${CLAUDE_PLUGIN_ROOT}/bin/setup.py" --reset
 ```
 
 任何其他回應都當取消，告訴使用者「已取消」。

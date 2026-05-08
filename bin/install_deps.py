@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Auto-install Python dependencies if missing or requirements.txt changed.
 
 Runs as SessionStart hook. Compares plugin's requirements.txt against the

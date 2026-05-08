@@ -22,6 +22,29 @@
 - ✅ **完整 dry-run**（送出前看 JSON payload 確認）
 - ✅ 100% 用你自己的 Google 帳號 / 自己的 OAuth credential — 沒有共用授權、沒有第三方 server
 
+## 系統需求
+
+- **Python 3.10+** — plugin 用 Python 跑 OAuth 跟上傳邏輯
+- **Claude Code** 已安裝且能執行 plugin
+
+確認方式：
+
+```bash
+python3 --version    # 要 >= 3.10
+```
+
+如果沒裝 Python：
+
+| OS | 安裝方式 |
+|---|---|
+| macOS | `brew install python@3.12` |
+| Ubuntu/Debian | `sudo apt install python3 python3-pip` |
+| Fedora | `sudo dnf install python3 python3-pip` |
+| Windows | https://www.python.org/downloads/ （勾選 "Add to PATH"） |
+| 其他 | https://www.python.org/downloads/ |
+
+裝好後重啟終端機。
+
 ## 安裝
 
 ```

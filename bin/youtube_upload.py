@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """yc-plugin: YouTube upload script with full feature set.
 
 Features:
