@@ -1,7 +1,11 @@
 # yc-plugin
 
-> Claude Code 插件 — 把日常重複的內容工作自動化。
-> 提供 **`/youtube-upload`** 一鍵上傳影片、**`/youtube-setup`** 管理 credentials。
+> Claude Code 插件 — YouTube 創作者完整工作流。
+>
+> **影片** → `/youtube-upload` 上傳、`/youtube-shorts` 切 Shorts
+> **生命週期** → `/youtube-list` 列出、`/youtube-stats` 看流量、`/youtube-update` 改 metadata
+> **連載** → `/youtube-series` 系列模板（標題格式 / 描述 / playlist 一次定義，每集自動套）
+> **Credential** → `/youtube-setup` OAuth 管理（init / export / import / reset）
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Made for Claude Code](https://img.shields.io/badge/made%20for-Claude%20Code-orange)](https://claude.com/claude-code)
@@ -20,6 +24,9 @@
 - ✅ **斷網續傳**（resumable，6 次指數退避重試，不用整段重來）
 - ✅ **發布後驗證**（自動 polling YouTube 確認影片真的能播）
 - ✅ **完整 dry-run**（送出前看 JSON payload 確認）
+- ✅ **連載系列模板**（多集連載一次定義 + 自動跨集連結）
+- ✅ **直式 Shorts 切片**（從橫式長片抽 9:16 高潮片段）
+- ✅ **流量回饋 / metadata 改寫**（不重新上傳就能調整）
 - ✅ 100% 用你自己的 Google 帳號 / 自己的 OAuth credential — 沒有共用授權、沒有第三方 server
 
 ## 系統需求
