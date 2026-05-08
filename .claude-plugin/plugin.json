@@ -23,7 +23,5 @@
     "zh-tw"
   ],
   "category": "automation",
-  "tags": ["youtube", "creator-tools", "zh-tw"],
-  "hooks": "./hooks/hooks.json",
-  "commands": "./commands"
+  "tags": ["youtube", "creator-tools", "zh-tw"]
 }
