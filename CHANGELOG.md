@@ -2,6 +2,20 @@
 
 All notable changes documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.4.2] — 2026-05-08
+
+### Fixed
+- **Cross-platform Python compatibility** — many systems (recent macOS, most modern Linux distros) ship `python3` only, no `python` alias. Plugin would fail to load on those machines.
+  - All `commands/*` and `hooks.json` now invoke `python3` explicitly (10 references).
+  - `bin/*.py` scripts gained `#!/usr/bin/env python3` shebang and are now executable.
+
+### Added
+- **`bin/check_runtime.sh`** — runs at `SessionStart` before `install_deps.py`. If `python3` is missing from PATH, prints OS-specific install hints (brew / apt / dnf / Windows installer) and aborts plugin load early with a clear message.
+- **README 系統需求 section** — documents Python 3.10+ requirement plus install commands per OS.
+
+### Notes
+- Plugin does **not** auto-install Python — out of scope, requires sudo on most systems, and risks PATH conflicts with pyenv/conda. Detection + guidance is the standard approach.
+
 ## [0.4.1] — 2026-05-08
 
 ### Added
