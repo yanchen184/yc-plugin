@@ -1,6 +1,6 @@
 {
   "name": "yc-plugin",
-  "metadata": {
+  "owner": {
     "name": "Bob Chen",
     "email": "bobchen184@gmail.com"
   },
