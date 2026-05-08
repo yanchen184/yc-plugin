@@ -2,6 +2,30 @@
 
 All notable changes documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.5.0] — 2026-05-08
+
+### Added — 5 new commands for full creator workflow
+
+- **`/youtube-list`** — list my uploads with filters (privacy / playlist / date / query). Foundation command for /update, /stats, /delete.
+- **`/youtube-stats`** — pull view / like / comment / engagement-rate stats for one or more videos. Sortable by views / likes / engagement / date.
+- **`/youtube-update`** — change title, description, tags (additive add/remove), privacy, playlist (add/remove), thumbnail, caption — without re-uploading. Always supports `--dry-run`.
+- **`/youtube-series`** — multi-episode series template manager: define title / description / tags / playlist once, apply per episode with auto-substitution of `{episode}`, `{episode_title}`, `{previous_link_block}` (auto-resolves to previous episode's URL), `{next_episode_title}`. Records uploaded episodes back to template.
+- **`/youtube-shorts`** — extract a 9:16 vertical Shorts clip from a horizontal video. Three styles (blur-bg / pillarbox / zoom). Auto-extracts subset of SRT for that time range, time-shifts to t=0, burns in. Optional one-shot upload as Short.
+
+### Added — supporting infrastructure
+
+- `bin/lib/formatting.py` — CJK-aware table / json / markdown renderers shared by list/stats output.
+- `bin/lib/youtube_client.py` extensions:
+  - `list_my_videos()` — pulls from channel's uploads playlist
+  - `get_video_details()` — batched videos.list (handles >50 IDs)
+  - `update_video()` — fetches current snippet/status first, merges, sends back (avoids YouTube clearing unspecified fields)
+  - `remove_from_playlist()` — find playlistItem by videoId and delete
+- `commands/youtube-{list,stats,update,series,shorts}.md` — Claude workflow definitions for each.
+
+### Requirements
+
+- `/youtube-shorts` requires `ffmpeg` on PATH (script fails fast with install hints).
+
 ## [0.4.2] — 2026-05-08
 
 ### Fixed
