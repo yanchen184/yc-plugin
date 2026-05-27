@@ -8,8 +8,8 @@
     {
       "name": "yc-plugin",
       "source": "./",
-      "description": "Claude Code 插件 — YouTube 創作者完整工作流：upload / list / stats / update / series / shorts",
-      "version": "0.5.0",
+      "description": "Claude Code 插件 — YouTube 創作者完整工作流（upload / list / stats / update / series / shorts），附帶 /screendoc 前端截圖操作手冊一條龍",
+      "version": "0.6.0",
       "homepage": "https://github.com/yanchen184/yc-plugin",
       "repository": "https://github.com/yanchen184/yc-plugin",
       "license": "MIT",
@@ -24,10 +24,13 @@
         "playlist",
         "schedule",
         "captions",
+        "screenshot",
+        "playwright",
+        "documentation",
         "zh-tw"
       ],
       "category": "automation",
-      "tags": ["youtube", "creator-tools"]
+      "tags": ["youtube", "creator-tools", "screenshot", "playwright"]
     }
   ]
 }

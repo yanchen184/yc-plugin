@@ -6,6 +6,8 @@
 > **生命週期** → `/youtube-list` 列出、`/youtube-stats` 看流量、`/youtube-update` 改 metadata
 > **連載** → `/youtube-series` 系列模板（標題格式 / 描述 / playlist 一次定義，每集自動套）
 > **Credential** → `/youtube-setup` OAuth 管理（init / export / import / reset）
+>
+> **附帶工具** → `/screendoc` 前端專案截圖手冊一條龍（Playwright 截圖 → 4 視角審查 → HTML 操作手冊，[詳見下方](#screendoc--前端截圖操作手冊一條龍)）
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Made for Claude Code](https://img.shields.io/badge/made%20for-Claude%20Code-orange)](https://claude.com/claude-code)
@@ -266,24 +268,84 @@ YouTube Data API 預設每天 10000 quota units，每次上傳 ~1600。所以 ~6
 python ~/.claude/plugins/cache/yc-plugin/.../bin/setup.py --reset
 ```
 
+## screendoc — 前端截圖操作手冊一條龍
+
+> 這是 yc-plugin 附帶的一個獨立 skill，跟 YouTube 工作流無關。裝了 plugin 就自動可用，下 `/screendoc` 觸發。
+
+把一個前端專案（React / Next / Vue / 任意 SPA）變成一份**對外可發表的操作手冊**：每張截圖對應系統真實狀態，每句說明對應截圖實際元素，經過 4 個視角輪番審查通過。
+
+### 它解決什麼
+
+手寫操作手冊的三個老問題：截圖跟當前 UI 對不上、說明文字跟截圖內容不一致、改版後整本要重截。screendoc 用 Playwright 從真實渲染的頁面截圖，再讓 4 個審查視角（UI/UX、系統分析、新手、開發者）逐張比對 caption 與截圖、截圖與原始碼，不一致就局部重截，迭代到全數通過才產出 HTML。
+
+### 怎麼用
+
+```bash
+/screendoc <前端專案入口路徑>
+/screendoc .                      # 當前目錄就是專案根
+/screendoc ./apps/web --code-mode=write   # 審查發現 UI bug 允許改 source
+/screendoc . --max-iterations=30          # 放寬審查迭代上限（預設 20）
+```
+
+| 參數 | 預設 | 說明 |
+|------|------|------|
+| `<入口路徑>` | 必填 | 專案根目錄、或 `e2e/` 目錄 |
+| `--code-mode` | `read` | `read` 只改 spec/caption；`write` 可改 source 修 UI bug |
+| `--max-iterations` | `20` | 4 視角審查→修→局部重截 的迴圈上限 |
+
+### 流程（Phase 0–5）
+
+1. **Phase 0 PRECHECK** — 偵測專案類型（前端框架、dev server 啟法、有沒有現成 e2e）
+2. **Phase 1 ANALYZE** — 產截圖清單，每張鎖定 DOM anchor
+3. **Phase 2 SCREENSHOT** — 跑 Playwright spec 截圖 + 全頁面樹掃描
+4. **Phase 3 CAPTION** — 對每張圖寫敘事性說明，產縮圖審查手冊
+5. **Phase 4 REVIEW LOOP** — UI/UX + SA + 新手 + Developer 四視角並行審查，不過就局部重截，迭代
+6. **Phase 5 FULL REBUILD** — 全數通過後清空重跑，產最終 `manual.html`
+
+### 系統需求
+
+- **Node.js + Playwright**（skill 會引導在隔離目錄裝 `@playwright/test`，不污染你的專案）
+- **Python 3.10+ + Pillow**（產縮圖手冊用，`pip install pillow`）
+
 ## 檔案結構
 
 ```
 yc-plugin/
 ├── .claude-plugin/
-│   ├── plugin.json
-│   └── marketplace.json
-├── commands/youtube-upload.md      # /youtube-upload 命令定義
+│   ├── plugin.json                 # plugin metadata
+│   └── marketplace.json            # marketplace 登錄資訊
+├── commands/                       # 7 個 YouTube 工作流命令
+│   ├── youtube-upload.md           # /youtube-upload  一鍵上傳（封面/排程/playlist/字幕）
+│   ├── youtube-update.md           # /youtube-update  改標題/描述/tags/隱私/封面，免重傳
+│   ├── youtube-list.md             # /youtube-list    列出已上傳影片，可篩選
+│   ├── youtube-stats.md            # /youtube-stats   拉觀看/讚/留言/互動率
+│   ├── youtube-series.md           # /youtube-series  多集系列模板，每集自動套
+│   ├── youtube-shorts.md           # /youtube-shorts  橫式切 9:16 Shorts
+│   └── youtube-setup.md            # /youtube-setup   初始化/狀態/OAuth 匯出匯入/重設
+├── skills/
+│   └── screendoc/                  # /screendoc 前端截圖手冊一條龍（auto-discovered skill）
+│       ├── SKILL.md                # 主流程 Phase 0–5
+│       ├── README.md
+│       ├── failure-modes.md        # FM catalog
+│       ├── detectors/              # 前端框架偵測（next/react/vue/nocobase/others）
+│       └── templates/              # spec-skeleton.ts / build-manual.py / review-prompts
 ├── hooks/hooks.json                # SessionStart hook (auto pip install)
 ├── bin/
 │   ├── lib/
 │   │   ├── paths.py                # plugin data dir / token / log paths
 │   │   ├── console.py              # info/warn/err with file logging
-│   │   └── youtube_client.py       # OAuth + upload helpers
-│   ├── youtube_upload.py           # 主上傳腳本
-│   ├── setup.py                    # 第一次設定
+│   │   ├── formatting.py           # 輸出格式化 helper
+│   │   └── youtube_client.py       # OAuth + YouTube API helpers
+│   ├── youtube_upload.py           # 上傳
+│   ├── youtube_update.py           # 更新影片 metadata
+│   ├── youtube_list.py             # 列出影片
+│   ├── youtube_stats.py            # 統計數據
+│   ├── youtube_series.py           # 系列模板
+│   ├── youtube_shorts.py           # Shorts 切片
 │   ├── youtube_auth.py             # 獨立 OAuth bootstrap
-│   └── install_deps.py             # 自動 pip install
+│   ├── setup.py                    # 第一次設定
+│   ├── install_deps.py             # 自動 pip install
+│   └── check_runtime.sh            # runtime 檢查
 ├── requirements.txt
 ├── README.md (你正在看的)
 ├── CHANGELOG.md
