@@ -2,6 +2,13 @@
 
 All notable changes documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.7.0] — 2026-05-29
+
+### Added — documentation style discipline
+
+- **`skills/writing-docs`** — auto-applied skill enforcing three doc-writing rules: docs describe present state (not history/archival notes), no self-promotion or decorative headers, neutral factual descriptions. Generalizes the code discipline (no `// removed` comments, no backwards-compat shims) to docs, config comments, API schemas, and UI text.
+- **`/docs-lint <file|dir> [--fix]`** — scans markdown for violations of the writing-docs rules (history-archival phrasing, marketing words, decorative emoji titles) and lists dead links pointing at deleted files. Report-only; never auto-edits (style fixes need human context).
+
 ## [0.5.0] — 2026-05-08
 
 ### Added — 5 new commands for full creator workflow

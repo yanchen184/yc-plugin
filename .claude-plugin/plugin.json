@@ -1,6 +1,6 @@
 {
   "name": "yc-plugin",
-  "description": "Claude Code 插件 — YouTube 創作者完整工作流（upload / title / list / stats / update / series / shorts），附帶 /screendoc 前端截圖操作手冊一條龍",
+  "description": "Claude Code 插件 — YouTube 創作者完整工作流（upload / title / list / stats / update / series / shorts），附帶 /screendoc 前端截圖操作手冊一條龍，與 writing-docs 文件風格紀律 + /docs-lint 文件檢查",
   "version": "0.7.0",
   "author": {
     "name": "Bob Chen",
