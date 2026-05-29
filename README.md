@@ -3,6 +3,7 @@
 > Claude Code 插件 — YouTube 創作者完整工作流。
 >
 > **影片** → `/youtube-upload` 上傳、`/youtube-shorts` 切 Shorts
+> **標題** → `/youtube-title` 產影片標題（跨公式產候選 + CTR 計分 + 縮圖文案建議，YouTube 邏輯非部落格 SEO）
 > **生命週期** → `/youtube-list` 列出、`/youtube-stats` 看流量、`/youtube-update` 改 metadata
 > **連載** → `/youtube-series` 系列模板（標題格式 / 描述 / playlist 一次定義，每集自動套）
 > **Credential** → `/youtube-setup` OAuth 管理（init / export / import / reset）
