@@ -1,5 +1,5 @@
-# YC Roundtrip Verify
+# YC Roundtrip Verify (updated)
 
-This skill was created via the Plugin Manager UI to verify the full CRUD -> proposal -> approve -> JGit commit+push chain reaches the GitHub yc-plugin repo.
+This content was UPDATED via the Plugin Manager UI to verify the update path also pushes to GitHub yc-plugin.
 
-marker: roundtrip-create-v1
+marker: roundtrip-update-v2
